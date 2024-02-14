@@ -7,9 +7,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
+import { Flight } from '../models/flight';
 
 @Component({
-  selector: 'app-flight-form',
+  selector: 'flight-form',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
@@ -82,14 +83,4 @@ export class FlightFormComponent {
     );
   }
 
-}
-
-export interface Flight {
-  user: string;
-  airline: string;
-  arrivalDate: Date;
-  arrivalTime: string;
-  flightNumber: string;
-  numOfGuests: number;
-  comments: string;
 }
