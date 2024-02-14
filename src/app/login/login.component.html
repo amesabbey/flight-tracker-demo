@@ -1,0 +1,40 @@
+<section class="login-initial-load" [hidden]="!loginView || !createAccountView">
+    <button mat-raised-button (click)="loginView = false" class="login-initial-buttons">Login</button>
+    <button mat-raised-button (click)="createAccountView = false" class="login-initial-buttons">Create Account</button>
+</section>
+
+<section class="login-existing-user" [hidden]="loginView">
+    <div>
+        <h2>Login</h2>
+        <form (ngSubmit)="login()" #loginForm="ngForm">
+          <mat-form-field class="login-form-fields">
+            <mat-label>Email:</mat-label>
+            <input matInput type="email" name="email" [(ngModel)]="email" required>
+          </mat-form-field>
+          <mat-form-field class="login-form-fields">
+            <mat-label>Password:</mat-label>
+            <input matInput type="password" name="password" [(ngModel)]="password" required>
+          </mat-form-field>
+          <button mat-raised-button type="submit" [disabled]="!loginForm.valid">Login</button>
+          <button mat-raised-button (click)="clearForm()">Cancel</button>
+        </form>
+    </div>
+</section>
+
+<section class="login-create-new-user" [hidden]="createAccountView">
+    <div>
+        <h2>Create Account</h2>
+        <form (ngSubmit)="createUser()" #createUserForm="ngForm">
+          <mat-form-field class="login-form-fields">
+            <mat-label>Email:</mat-label>
+            <input matInput type="email" name="email" [(ngModel)]="email" required>
+          </mat-form-field>
+          <mat-form-field class="login-form-fields">
+            <mat-label>Password:</mat-label>
+            <input matInput type="password" name="password" [(ngModel)]="password" required>
+          </mat-form-field>
+          <button mat-raised-button type="submit" [disabled]="!createUserForm.valid">Create Account and Login</button>
+          <button mat-raised-button (click)="clearForm()">Cancel</button>
+        </form>
+    </div>
+</section>
