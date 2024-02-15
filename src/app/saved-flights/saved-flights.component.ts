@@ -3,6 +3,8 @@ import {MatTableModule} from '@angular/material/table';
 import { Flight } from '../models/flight';
 import { Auth } from '@angular/fire/auth';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ErrorPopupComponent } from '../error-popup/error-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'saved-flights',
@@ -25,7 +27,7 @@ export class SavedFlightsComponent {
     'comments'
   ];
 
-  constructor(private afAuth: Auth, private http: HttpClient ) { }
+  constructor(private afAuth: Auth, private http: HttpClient, public dialog: MatDialog ) { }
 
   ngOnInit() {
     this.getSavedFlights();
@@ -44,6 +46,9 @@ export class SavedFlightsComponent {
 
         // Filter by current user
         this.filterByCurrentUser();
+      },
+      error => {
+        this.displayError(error);
       }
     );
   }
@@ -54,5 +59,9 @@ export class SavedFlightsComponent {
 
   displayDate(fullDate: string) {
     return fullDate.split('T')[0];
+  }
+
+  displayError(error: any) {
+    this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 }
