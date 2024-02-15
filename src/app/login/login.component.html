@@ -16,7 +16,7 @@
       <input matInput type="password" name="password" [(ngModel)]="password" required>
     </mat-form-field>
     <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">Login</button>
-    <button mat-raised-button (click)="clearForm()">Cancel</button>
+    <button mat-raised-button type="reset" (click)="clearForm()">Cancel</button>
   </form>
 </section>
 
@@ -32,6 +32,6 @@
       <input matInput type="password" name="password" [(ngModel)]="password" required>
     </mat-form-field>
     <button mat-raised-button type="submit" color="primary" [disabled]="!createUserForm.valid">Create Account and Login</button>
-    <button mat-raised-button (click)="clearForm()">Cancel</button>
+    <button mat-raised-button type="reset" (click)="clearForm()">Cancel</button>
   </form>
 </section>

@@ -8,6 +8,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
 import { Flight } from '../models/flight';
+import { ErrorPopupComponent } from '../error-popup/error-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'flight-form',
@@ -43,7 +45,7 @@ export class FlightFormComponent {
     commentsControl: this.commentsControl,
   });
 
-  constructor(private formBuilder: FormBuilder, private afAuth: Auth, private http: HttpClient ) { }
+  constructor(private formBuilder: FormBuilder, private afAuth: Auth, private http: HttpClient, public dialog: MatDialog ) { }
   
   clearForm() {
     this.airlineControl.reset();
@@ -58,7 +60,7 @@ export class FlightFormComponent {
     const email = this.afAuth.currentUser?.email;
 
     if (!email) {
-      console.error('User is not logged in');
+      this.displayError('User is not logged in');
       return;
     }
 
@@ -79,8 +81,15 @@ export class FlightFormComponent {
     this.http.post('https://flight-tracker-demo-468c7-default-rtdb.firebaseio.com/flights.json', flight).subscribe(
       responseData => {
         console.log(responseData);
-      }
+      },
+      error => {
+        this.displayError(error);
+      }      
     );
+  }
+
+  displayError(error: any) {
+    this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 
 }
