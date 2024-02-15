@@ -9,7 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
 import { Flight } from '../models/flight';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'flight-form',
@@ -45,7 +45,12 @@ export class FlightFormComponent {
     commentsControl: this.commentsControl,
   });
 
-  constructor(private formBuilder: FormBuilder, private afAuth: Auth, private http: HttpClient, public dialog: MatDialog ) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private afAuth: Auth, 
+    private http: HttpClient, 
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<FlightFormComponent> ) { }
   
   clearForm() {
     this.airlineControl.reset();
@@ -75,6 +80,7 @@ export class FlightFormComponent {
     };
     
     this.addFlightToDatabase(flight);
+    this.sendFlightInfoPayload();
   }
 
   addFlightToDatabase(flight: Flight) {
@@ -88,8 +94,41 @@ export class FlightFormComponent {
     );
   }
 
+  sendFlightInfoPayload() {
+    const flightInfo: FlightInfoPayload = {
+      airline: this.airlineControl.value,
+      arrivalDate: this.arrivalDateControl.value,
+      arrivalTime: this.arrivalTimeControl.value,
+      flightNumber: this.flightNumberControl.value,
+      numOfGuests: this.numOfGuestsControl.value,
+      comments: this.commentsControl.value
+    };
+
+    this.http.post('https://us-central1-crm-sdk.cloudfunctions.net/flightInfoChallenge', flightInfo).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   displayError(error: any) {
     this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+}
+
+export interface FlightInfoPayload {
+  airline: string;
+  arrivalDate: Date;
+  arrivalTime: string;
+  flightNumber: string;
+  numOfGuests: number;
+  comments?: string;
 }

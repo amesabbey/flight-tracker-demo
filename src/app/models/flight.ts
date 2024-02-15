@@ -6,6 +6,6 @@ export interface Flight {
     arrivalTime: string;
     flightNumber: string;
     numOfGuests: number;
-    comments: string;
+    comments?: string;
 
 }

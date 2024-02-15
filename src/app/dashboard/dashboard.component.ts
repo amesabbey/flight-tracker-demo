@@ -22,7 +22,7 @@ export class DashboardComponent {
     constructor(private afAuth: Auth, private router: Router, public dialog: MatDialog) {}
 
     openAddFlightDialog() {
-        const dialogRef = this.dialog.open(FlightFormComponent, { width: '600px', height: '600px' });
+        const dialogRef = this.dialog.open(FlightFormComponent, { width: '600px', height: '700px' });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
