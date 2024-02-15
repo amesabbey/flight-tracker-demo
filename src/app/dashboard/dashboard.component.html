@@ -1,3 +1,13 @@
-<!-- <flight-form></flight-form> -->
+<div class="header-row">
+    <div class="title">
+        <span class="title-text">Flight Tracker</span>
+    </div>
+    <div class="button">
+        <button mat-raised-button (click)="openAddFlightDialog()" color="primary" class="add-flight-button">Add New Flight</button>
+        <button mat-raised-button (click)="logout()">Logout</button>
+    </div>
+</div>
 
-<saved-flights></saved-flights>
+<div class="flight-grid">
+    <saved-flights></saved-flights>
+</div>
