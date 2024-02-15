@@ -1,3 +1,31 @@
+section {
+    padding: 100px;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    margin-bottom: 20px;
+    display: block;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+mat-form-field {
+    min-width: 400px;
+}
+
+.login-initial-buttons {
+    display: block;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .login-form-fields {
     display: block;
 }
