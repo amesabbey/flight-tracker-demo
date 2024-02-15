@@ -11,11 +11,10 @@
     },
     "ui": {
       "enabled": true
-    },
-    "singleProjectMode": true
+    }
   },
   "hosting": {
-    "public": "public",
+    "public": "dist/flight-tracker-demo/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
