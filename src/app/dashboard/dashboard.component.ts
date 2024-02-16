@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { SplashComponent } from '../splash/splash.component';
 
 @Component({
     selector: 'app-dashboard',

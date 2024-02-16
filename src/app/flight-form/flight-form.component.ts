@@ -10,12 +10,15 @@ import { Auth } from '@angular/fire/auth';
 import { Flight } from '../models/flight';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SplashComponent } from '../splash/splash.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'flight-form',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [
+    CommonModule,
     FormsModule, 
     ReactiveFormsModule,
     MatButtonModule, 
@@ -23,11 +26,14 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
     MatInputModule, 
     MatDatepickerModule,
     HttpClientModule,
+    SplashComponent
   ],
   templateUrl: './flight-form.component.html',
   styleUrl: './flight-form.component.scss'
 })
 export class FlightFormComponent {
+
+  splashActive = false;
 
   airlineControl = new FormControl();
   arrivalDateControl = new FormControl();
@@ -62,6 +68,9 @@ export class FlightFormComponent {
   }
 
   createFlightObject() {
+    // Start loading spinner
+    this.splashActive = true;
+
     const email = this.afAuth.currentUser?.email;
 
     if (!email) {
@@ -79,6 +88,7 @@ export class FlightFormComponent {
       comments: this.commentsControl.value
     };
     
+    
     this.addFlightToDatabase(flight);
     this.sendFlightInfoPayload();
   }
@@ -86,7 +96,7 @@ export class FlightFormComponent {
   addFlightToDatabase(flight: Flight) {
     this.http.post('https://flight-tracker-demo-468c7-default-rtdb.firebaseio.com/flights.json', flight).subscribe(
       responseData => {
-        console.log(responseData);
+        console.log('Successfully passed flight to Firebase, ', responseData);
       },
       error => {
         this.displayError(error);
@@ -99,8 +109,8 @@ export class FlightFormComponent {
     const headerDict = {
       'Content-Type' : 'application/json; charset=utf-8',
       'Accept'       : 'application/json',
-      'Token': token,
-      'Candidate'         : 'Abbey Ames'
+      // 'Token'        : token,
+      'Candidate'    : 'Abbey Ames'
     };
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
@@ -118,18 +128,20 @@ export class FlightFormComponent {
 
     this.http.post(url, flightInfo, requestOptions).subscribe(
       response => {
-        console.log(response);
+        console.log('Successfully passed flight to CRM SDK, ', response);
         this.closeDialog(true);
-
       },
       error => {
-        console.log(error);
         this.displayError(error.error);
       }
     );
   }
 
   displayError(error: any) {
+    // Clear loading spinner
+    this.splashActive = false;
+
+    // Display error message
     this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 
