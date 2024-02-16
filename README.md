@@ -1,5 +1,6 @@
 # FlightTrackerDemo
 
+Live version currently hosted at `https://flight-tracker-demo-468c7.web.app/`.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
 
 ## Development server
