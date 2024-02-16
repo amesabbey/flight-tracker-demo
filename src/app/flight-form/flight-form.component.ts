@@ -109,7 +109,7 @@ export class FlightFormComponent {
     const headerDict = {
       'Content-Type' : 'application/json; charset=utf-8',
       'Accept'       : 'application/json',
-      // 'Token'        : token,
+      'Token'        : token,
       'Candidate'    : 'Abbey Ames'
     };
     const requestOptions = {

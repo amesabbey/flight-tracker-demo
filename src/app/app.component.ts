@@ -23,7 +23,6 @@ export class AppComponent {
 
   // Shows and hides the loading spinner during RouterEvent changes
   navigationInterceptor(event: any): void {
-    console.log('event: ', event)
     if (event instanceof NavigationStart) {
       this.splashActive = true;
     }
