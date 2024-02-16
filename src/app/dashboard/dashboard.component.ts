@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-dashboard',
@@ -15,10 +16,12 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     imports: [
         FlightFormComponent, 
         SavedFlightsComponent, 
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule
     ]
 })
 export class DashboardComponent {
+    refresh: boolean = false;
 
     constructor(private afAuth: Auth, private router: Router, private _snackBar: MatSnackBar, public dialog: MatDialog) {}
 
@@ -28,6 +31,7 @@ export class DashboardComponent {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this._snackBar.open('Flight successfully added!', 'Close', {duration: 5000, verticalPosition: 'top'});
+                this.refresh = !this.refresh;
             }
         });
     }

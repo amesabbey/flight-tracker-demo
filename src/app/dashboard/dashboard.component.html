@@ -3,11 +3,12 @@
         <h1>Flight Tracker</h1>
     </div>
     <div class="button">
+        <button mat-raised-button (click)="refresh = !refresh" class="refresh-button"><mat-icon>sync</mat-icon></button>
         <button mat-raised-button (click)="openAddFlightDialog()" color="primary" class="add-flight-button">Add New Flight</button>
         <button mat-raised-button (click)="logout()" color="accent">Logout</button>
     </div>
 </div>
 
 <div class="flight-grid">
-    <saved-flights></saved-flights>
+    <saved-flights [reload]="refresh"></saved-flights>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { Flight } from '../models/flight';
 import { Auth } from '@angular/fire/auth';
@@ -13,7 +13,9 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './saved-flights.component.html',
   styleUrl: './saved-flights.component.scss'
 })
-export class SavedFlightsComponent {
+export class SavedFlightsComponent implements OnInit, OnChanges {
+
+  @Input() reload: boolean = false;
 
   fullFlightList: [] = [];
   dataSource: Flight[] = [];
@@ -31,6 +33,12 @@ export class SavedFlightsComponent {
 
   ngOnInit() {
     this.getSavedFlights();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['reload']) {
+      this.getSavedFlights();
+    }
   }
   
   getSavedFlights() {
