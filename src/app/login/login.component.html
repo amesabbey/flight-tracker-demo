@@ -1,7 +1,7 @@
 <section class="login-initial-load" [hidden]="!loginView || !createAccountView">
   <h1>Flight Tracker Demo</h1>
   <button mat-raised-button (click)="loginView = false" color="primary" class="login-initial-buttons">Login</button>
-  <button mat-raised-button (click)="createAccountView = false" class="login-initial-buttons">Create Account</button>
+  <button mat-raised-button (click)="createAccountView = false" color="accent" class="login-initial-buttons">Create Account</button>
 </section>
 
 <section class="login-existing-user" [hidden]="loginView">

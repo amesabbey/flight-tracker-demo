@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
 import { Flight } from '../models/flight';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
@@ -95,6 +95,18 @@ export class FlightFormComponent {
   }
 
   sendFlightInfoPayload() {
+    const token = 'WW91IG11c3QgYmUgdGhlIGN1cmlvdXMgdHlwZS4gIEJyaW5nIHRoaXMgdXAgYXQgdGhlIGludGVydmlldyBmb3IgYm9udXMgcG9pbnRzICEh';
+    const headerDict = {
+      'Content-Type' : 'application/json; charset=utf-8',
+      'Accept'       : 'application/json',
+      'Token': token,
+      'Candidate'         : 'Abbey Ames'
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    const url = 'https://us-central1-crm-sdk.cloudfunctions.net/flightInfoChallenge';
+
     const flightInfo: FlightInfoPayload = {
       airline: this.airlineControl.value,
       arrivalDate: this.arrivalDateControl.value,
@@ -104,12 +116,15 @@ export class FlightFormComponent {
       comments: this.commentsControl.value
     };
 
-    this.http.post('https://us-central1-crm-sdk.cloudfunctions.net/flightInfoChallenge', flightInfo).subscribe(
+    this.http.post(url, flightInfo, requestOptions).subscribe(
       response => {
         console.log(response);
+        this.closeDialog(true);
+
       },
       error => {
         console.log(error);
+        this.displayError(error.error);
       }
     );
   }
@@ -118,8 +133,8 @@ export class FlightFormComponent {
     this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 
-  closeDialog() {
-    this.dialogRef.close();
+  closeDialog(result: boolean) {
+    this.dialogRef.close(result);
   }
 
 }

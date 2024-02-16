@@ -10,11 +10,7 @@
 .title {
     text-align: left;
     width: 100%;
-}
-
-.title-text {
-    font-size: 32px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .flight-grid {
@@ -23,4 +19,9 @@
 
 .add-flight-button {
     margin-right: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
 }
