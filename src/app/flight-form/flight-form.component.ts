@@ -5,11 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
 import { Flight } from '../models/flight';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'flight-form',
@@ -45,7 +45,12 @@ export class FlightFormComponent {
     commentsControl: this.commentsControl,
   });
 
-  constructor(private formBuilder: FormBuilder, private afAuth: Auth, private http: HttpClient, public dialog: MatDialog ) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private afAuth: Auth, 
+    private http: HttpClient, 
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<FlightFormComponent> ) { }
   
   clearForm() {
     this.airlineControl.reset();
@@ -75,6 +80,7 @@ export class FlightFormComponent {
     };
     
     this.addFlightToDatabase(flight);
+    this.sendFlightInfoPayload();
   }
 
   addFlightToDatabase(flight: Flight) {
@@ -88,8 +94,56 @@ export class FlightFormComponent {
     );
   }
 
+  sendFlightInfoPayload() {
+    const token = 'WW91IG11c3QgYmUgdGhlIGN1cmlvdXMgdHlwZS4gIEJyaW5nIHRoaXMgdXAgYXQgdGhlIGludGVydmlldyBmb3IgYm9udXMgcG9pbnRzICEh';
+    const headerDict = {
+      'Content-Type' : 'application/json; charset=utf-8',
+      'Accept'       : 'application/json',
+      'Token': token,
+      'Candidate'         : 'Abbey Ames'
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    const url = 'https://us-central1-crm-sdk.cloudfunctions.net/flightInfoChallenge';
+
+    const flightInfo: FlightInfoPayload = {
+      airline: this.airlineControl.value,
+      arrivalDate: this.arrivalDateControl.value,
+      arrivalTime: this.arrivalTimeControl.value,
+      flightNumber: this.flightNumberControl.value,
+      numOfGuests: this.numOfGuestsControl.value,
+      comments: this.commentsControl.value
+    };
+
+    this.http.post(url, flightInfo, requestOptions).subscribe(
+      response => {
+        console.log(response);
+        this.closeDialog(true);
+
+      },
+      error => {
+        console.log(error);
+        this.displayError(error.error);
+      }
+    );
+  }
+
   displayError(error: any) {
     this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 
+  closeDialog(result: boolean) {
+    this.dialogRef.close(result);
+  }
+
+}
+
+export interface FlightInfoPayload {
+  airline: string;
+  arrivalDate: Date;
+  arrivalTime: string;
+  flightNumber: string;
+  numOfGuests: number;
+  comments?: string;
 }

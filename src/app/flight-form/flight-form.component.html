@@ -1,5 +1,6 @@
 <div class="flight-form">
     <form [formGroup]="formGroup" #flightForm="ngForm">
+        <h2>Add Flight Details</h2>
 
         <div>
             <mat-form-field>
@@ -41,8 +42,9 @@
         </div>
 
         <div>
-            <button mat-raised-button [disabled]="!flightForm.valid" type="submit" color="primary" (click)="createFlightObject()">Submit</button>
-            <button mat-raised-button type="reset" (click)="clearForm()">Clear</button>
+            <button mat-raised-button [disabled]="!flightForm.valid" type="submit" color="primary" (click)="createFlightObject()" class="flight-form-button">Submit</button>
+            <button mat-raised-button type="reset" (click)="clearForm()" class="flight-form-button">Clear</button>
+            <button mat-raised-button type="reset" color="accent" (click)="closeDialog(false)">Exit</button>
         </div>
 
     </form>

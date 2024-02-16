@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "test-flight-demo": "flight-tracker-demo-468c7",
+    "default": "flight-tracker-demo-468c7"
+  },
+  "targets": {},
+  "etags": {}
+}

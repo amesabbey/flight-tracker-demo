@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-dashboard',
@@ -19,13 +20,15 @@ import { Auth } from '@angular/fire/auth';
 })
 export class DashboardComponent {
 
-    constructor(private afAuth: Auth, private router: Router, public dialog: MatDialog) {}
+    constructor(private afAuth: Auth, private router: Router, private _snackBar: MatSnackBar, public dialog: MatDialog) {}
 
     openAddFlightDialog() {
-        const dialogRef = this.dialog.open(FlightFormComponent, { width: '600px', height: '600px' });
+        const dialogRef = this.dialog.open(FlightFormComponent, { width: '600px', height: '700px' });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            if (result) {
+                this._snackBar.open('Flight successfully added!', 'Close', {duration: 5000, verticalPosition: 'top'});
+            }
         });
     }
 
