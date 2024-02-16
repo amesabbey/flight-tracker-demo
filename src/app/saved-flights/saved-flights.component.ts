@@ -5,15 +5,22 @@ import { Auth } from '@angular/fire/auth';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { SplashComponent } from '../splash/splash.component';
 
 @Component({
   selector: 'saved-flights',
   standalone: true,
-  imports: [MatTableModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    SplashComponent,
+    MatTableModule, 
+    HttpClientModule],
   templateUrl: './saved-flights.component.html',
   styleUrl: './saved-flights.component.scss'
 })
 export class SavedFlightsComponent implements OnInit, OnChanges {
+  splashActive = false;
 
   @Input() reload: boolean = false;
 
@@ -32,11 +39,13 @@ export class SavedFlightsComponent implements OnInit, OnChanges {
   constructor(private afAuth: Auth, private http: HttpClient, public dialog: MatDialog ) { }
 
   ngOnInit() {
+    this.splashActive = true;
     this.getSavedFlights();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['reload']) {
+      this.splashActive = true;
       this.getSavedFlights();
     }
   }
@@ -63,6 +72,9 @@ export class SavedFlightsComponent implements OnInit, OnChanges {
 
   filterByCurrentUser() {
     this.dataSource = this.dataSource.filter(flight => flight.user === this.afAuth.currentUser?.email);
+
+    // Clear loading spinner
+    this.splashActive = false;
   }
 
   displayDate(fullDate: string) {
@@ -70,6 +82,10 @@ export class SavedFlightsComponent implements OnInit, OnChanges {
   }
 
   displayError(error: any) {
+    // Clear loading spinner
+    this.splashActive = false;
+
+    // Display error
     this.dialog.open(ErrorPopupComponent, { width: '500px', data: { message: error } });
   }
 }
