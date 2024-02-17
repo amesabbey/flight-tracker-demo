@@ -1,4 +1,6 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z6 saved-flights-table">
+<table mat-table [dataSource]="dataSource" 
+    matSort matSortActive="arrivalDate" matSortDirection="desc"  (matSortChange)="announceSortChange($event)" 
+    class="saved-flights-table">
 
     <ng-container matColumnDef="user">
         <th mat-header-cell *matHeaderCellDef>Email</th>
@@ -6,32 +8,32 @@
     </ng-container>
 
     <ng-container matColumnDef="airline">
-        <th mat-header-cell *matHeaderCellDef>Airline</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by airline">Airline</th>
         <td mat-cell *matCellDef="let flight"> {{ flight.airline }} </td>
     </ng-container>
     
     <ng-container matColumnDef="flightNumber">
-        <th mat-header-cell *matHeaderCellDef>Flight Number</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by flight number">Flight Number</th>
         <td mat-cell *matCellDef="let flight"> {{ flight.flightNumber }} </td>
     </ng-container>
 
     <ng-container matColumnDef="arrivalDate">
-        <th mat-header-cell *matHeaderCellDef>Arrival Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by arrival date">Arrival Date</th>
         <td mat-cell *matCellDef="let flight"> {{ displayDate(flight.arrivalDate) }} </td>
     </ng-container>
 
     <ng-container matColumnDef="arrivalTime">
-        <th mat-header-cell *matHeaderCellDef>Arrival Time</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by arrival time">Arrival Time</th>
         <td mat-cell *matCellDef="let flight"> {{ flight.arrivalTime }} </td>
     </ng-container>
 
     <ng-container matColumnDef="numOfGuests">
-        <th mat-header-cell *matHeaderCellDef>Number of Guests</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number of guests">Number of Guests</th>
         <td mat-cell *matCellDef="let flight"> {{ flight.numOfGuests }} </td>
     </ng-container>
     
     <ng-container matColumnDef="comments">
-        <th mat-header-cell *matHeaderCellDef>Comments</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by comments">Comments</th>
         <td mat-cell *matCellDef="let flight"> {{ flight.comments }} </td>
     </ng-container>
 
