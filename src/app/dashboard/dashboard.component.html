@@ -1,9 +1,10 @@
 <div class="header-row">
     <div class="title">
+        <mat-icon color="accent" class="flight-icon">connecting_airports</mat-icon>
         <h1>Flight Tracker</h1>
     </div>
     <div class="button">
-        <button mat-raised-button (click)="refresh = !refresh" class="refresh-button"><mat-icon>sync</mat-icon></button>
+        <button mat-raised-button (click)="refresh = !refresh" class="refresh-button"><mat-icon class="refresh-icon">sync</mat-icon></button>
         <button mat-raised-button (click)="openAddFlightDialog()" color="primary" class="add-flight-button">Add New Flight</button>
         <button mat-raised-button (click)="logout()" color="accent">Logout</button>
     </div>

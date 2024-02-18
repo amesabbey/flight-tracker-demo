@@ -18,7 +18,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     SplashComponent,
     HttpClientModule,
     MatTableModule, 
-    MatSortModule],
+    MatSortModule,],
   templateUrl: './saved-flights.component.html',
   styleUrl: './saved-flights.component.scss'
 })

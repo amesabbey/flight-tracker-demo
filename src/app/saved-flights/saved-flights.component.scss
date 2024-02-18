@@ -1,3 +1,17 @@
 .saved-flights-table {
-    min-height: 500px;
+    height: 500px;
+    overflow: scroll;
+}
+
+th {
+    font-weight: bold;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 2px solid transparent;
+    border-top: 2px solid transparent;
+}
+  
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: rgba(255,64,129,255);
 }

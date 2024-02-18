@@ -13,17 +13,13 @@
     font-weight: 700;
 }
 
-.flight-grid {
-    overflow-x: scroll;
-}
-
 .refresh-button {
     margin-right: 20px;
     text-align: center;
     padding-right: 5px;
 }
 
-mat-icon {
+refresh-icon {
     width: 100%;
 }
 
@@ -34,4 +30,15 @@ mat-icon {
 h1 {
     font-size: 32px;
     font-weight: bold;
+    display: inline;
+}
+
+mat-icon {
+    height: 100%;
+    width: 100%;
+}
+
+.flight-icon {
+    font-size: 70px;
+    display: inline;
 }
